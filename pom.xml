@@ -12,7 +12,7 @@
 	<artifactId>Auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Auth</name>
-	<description>Springboot-VueJs-AuthendicationApp</description>
+	<description>Authentication-App-Spring-VueJs-2Factor-GooleAuth</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
