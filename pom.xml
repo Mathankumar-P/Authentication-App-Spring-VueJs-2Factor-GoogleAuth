@@ -8,11 +8,11 @@
 		<version>3.1.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.SpringAuthendication</groupId>
-	<artifactId>Auth</artifactId>
+	<groupId>com.spring-authendication</groupId>
+	<artifactId>auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Auth</name>
-	<description>Authentication-App-Spring-VueJs-2Factor-GooleAuth</description>
+	<name>auth</name>
+	<description>Authentication-App-Spring-VueJs-2Factor-GoogleAuth</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

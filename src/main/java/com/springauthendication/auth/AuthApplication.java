@@ -1,4 +1,4 @@
-package com.SpringAuthendication.Auth;
+package com.springauthendication.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
