@@ -42,12 +42,12 @@ public class AuthController {
     }
 
     record LoginRequest (String email, String password){}
-    record LoginResponse( int id , @JsonProperty("first_name")String first_name,  @JsonProperty("last_name") String last_name,  String email ){}
+    record LoginResponse( String token ){}
 
     @PostMapping(value = "/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
-        var user = authService.login(loginRequest.email(), loginRequest.password());
-        return  new LoginResponse (user.getId(),user.getFirst_name(), user.getLast_name(),user.getEmail());
+        var token = authService.login(loginRequest.email(), loginRequest.password());
+        return  new LoginResponse (token.getToken());
     }
 
 

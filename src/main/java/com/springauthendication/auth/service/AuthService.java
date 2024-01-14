@@ -5,23 +5,33 @@ import com.springauthendication.auth.error.InvalidCredentialsError;
 import com.springauthendication.auth.error.PasswordNotMatchingError;
 import com.springauthendication.auth.model.User;
 import com.springauthendication.auth.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
+import lombok.Value;
 import org.springframework.data.relational.core.conversion.DbActionExecutionException;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.core.userdetails.UserDetailsResourceFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import javax.crypto.SecretKey;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class AuthService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    @Getter
+    private final UserRepository userRepository;
+    @Getter
+    private final PasswordEncoder passwordEncoder;
+    private final String accessToken;
+    private final String refreshToken;
+
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       String accessToken, String refreshToken) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
 
     public User registerService(String first_name , String last_name, String email, String password, String password_confirm) {
         if(!Objects.equals(password, password_confirm))
@@ -35,12 +45,14 @@ public class AuthService {
         return user;
     }
 
-    public User login(String email, String password) {
-        //find user by mail Id
+    public Token login(String email, String password) {
+        //find user by mail ID
         var user = userRepository.findByEmail(email).orElseThrow(InvalidCredentialsError::new);
         //check if the password matches
         if(! passwordEncoder.matches(password, user.getPassword()))
             throw new PasswordNotMatchingError();
-        return user;
+        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        System.out.println(secretKey.toString());
+        return Token.of(user.getId(), 10L, String.valueOf(secretKey));
     }
 }

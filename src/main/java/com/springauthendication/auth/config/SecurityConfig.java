@@ -7,7 +7,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
-public class SecurityConfig  {
+public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain (HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.ignoringRequestMatchers("/**"))
